@@ -1,13 +1,14 @@
-package drivers
+package database
 
 import (
 	"context"
 	"fmt"
+	"os"
+
 	"github.com/jmoiron/sqlx"
 	"github.com/rs/zerolog/log"
 	"github.com/synt4xer/go-clean-arch/config"
 	"go.uber.org/fx"
-	"os"
 )
 
 func NewDB(lc fx.Lifecycle, cfg *config.Config) *sqlx.DB {
