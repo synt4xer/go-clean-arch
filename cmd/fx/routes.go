@@ -3,20 +3,10 @@ package fx
 import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/synt4xer/go-clean-arch/internal/delivery/http"
 )
 
-//type RouteGroup struct {
-//	Prefix string
-//	Routes []Route
-//}
-
-//type Route struct {
-//	Method  string
-//	Path    string
-//	Handler http.HandlerFunc
-//}
-
-func AddRoutes() *chi.Mux {
+func AddRoutes(users *http.UsersHttp) *chi.Mux {
 	r := chi.NewRouter()
 
 	// default middlewares
@@ -27,6 +17,13 @@ func AddRoutes() *chi.Mux {
 	// TODO: add validator
 
 	// TODO: add route here
+	r.Route("/users", func(r chi.Router) {
+		r.Post("/", users.Create)       // POST /users - create a new user
+		r.Get("/", users.GetAll)        // GET /users - list all users
+		r.Get("/{id}", users.GetByID)   // GET /users/{id} - get a specific user by ID
+		r.Put("/{id}", users.Update)    // PUT /users/{id} - update a user by ID
+		r.Delete("/{id}", users.Delete) // DELETE /users/{id} - delete a user by ID
+	})
 
 	// TODO: add fallbacks
 
